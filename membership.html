@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>BODY FUEL | Membership</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800;900&family=Lexend:wght@400;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+                "primary-container": "#ff8c00",
+                "surface": "#131313",
+                "on-surface-variant": "#ddc1ae",
+                "background": "#131313",
+                "on-background": "#e5e2e1"
+            },
+            spacing: {
+                "margin": "40px",
+                "gutter": "24px",
+                "container-max": "1280px"
+            },
+            fontFamily: {
+                "headline-xl": ["Epilogue"],
+                "headline-md": ["Epilogue"],
+                "headline-lg": ["Epilogue"],
+                "body-lg": ["Lexend"],
+                "label-sm": ["Lexend"],
+                "body-md": ["Lexend"]
+            },
+            fontSize: {
+                "headline-xl": ["80px", {"lineHeight": "1.0", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                "headline-md": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                "headline-lg": ["48px", {"lineHeight": "1.1", "fontWeight": "800"}],
+                "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "label-sm": ["14px", {"lineHeight": "1.0", "fontWeight": "600"}],
+                "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .text-stroke {
+            -webkit-text-stroke: 1px rgba(255, 140, 0, 0.5);
+            color: transparent;
+        }
+        .zebra-row:nth-child(even) {
+            background-color: #0A0A0A;
+        }
+        .zebra-row:hover {
+            background-color: #1a1a1a;
+            transition: background-color 0.3s ease;
+        }
+
+        /* GSAP Initial state */
+        .gsap-reveal { opacity: 0; visibility: hidden; }
+        
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-container selection:text-black overflow-x-hidden">
+
+    <!-- TopNavBar -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 bg-black border-b-2 border-zinc-900 transition-all duration-300">
+        <div class="flex justify-between items-center w-full px-8 py-4 max-w-7xl mx-auto">
+            <div class="text-2xl font-black text-orange-500 italic tracking-widest font-['Epilogue'] uppercase">
+                BODY FUEL
+            </div>
+            <div class="hidden md:flex gap-8 items-center">
+                <a class="font-['Epilogue'] font-black uppercase tracking-tighter text-white hover:text-orange-500 transition-colors duration-150" href="index.html">Home</a>
+                <a class="font-['Epilogue'] font-black uppercase tracking-tighter text-white hover:text-orange-500 transition-colors duration-150" href="services.html">Services</a>
+                <a class="font-['Epilogue'] font-black uppercase tracking-tighter text-orange-500 border-b-2 border-orange-500 pb-1" href="membership.html">Pricing</a>
+                <a class="font-['Epilogue'] font-black uppercase tracking-tighter text-white hover:text-orange-500 transition-colors duration-150" href="index.html#gallery">Gallery</a>
+                <a class="font-['Epilogue'] font-black uppercase tracking-tighter text-white hover:text-orange-500 transition-colors duration-150" href="booking.html">Booking</a>
+            </div>
+            <button onclick="openLoginModal()" class="bg-primary-container text-black font-['Epilogue'] font-black uppercase px-6 py-2 tracking-tighter hover:bg-white hover:text-black transition-all">
+                LOGIN
+            </button>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24">
+        <!-- Hero Section -->
+        <section class="max-w-7xl mx-auto px-8 mb-24 grid lg:grid-cols-2 gap-12 items-center">
+            <div class="hero-text-container">
+                <h1 class="font-headline-xl text-headline-xl uppercase mb-6 gsap-reveal">
+                    CHOOSE YOUR <br><span class="text-primary-container">FUEL</span>
+                </h1>
+                <p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg mb-8 gsap-reveal">
+                    No shortcuts. No excuses. Professional grade training plans designed for those who demand more from themselves. 
+                    Join the club that fuels champions.
+                </p>
+                <div class="flex gap-4 gsap-reveal">
+                    <div class="bg-primary-container px-4 py-1 text-black font-bold uppercase text-xs tracking-widest hover:scale-105 transition-transform cursor-default">
+                        EST. 2024
+                    </div>
+                    <div class="border border-white px-4 py-1 text-white font-bold uppercase text-xs tracking-widest hover:bg-white hover:text-black transition-colors cursor-default">
+                        ELITE ATHLETE READY
+                    </div>
+                </div>
+            </div>
+            <div class="relative aspect-[1.07] overflow-hidden contrast-125 border-4 border-zinc-900 hero-img-container gsap-reveal">
+                <img class="w-full h-full object-cover hero-img" src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=2069&auto=format&fit=crop">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                <div class="absolute bottom-6 left-6">
+                    <span class="font-headline-lg text-headline-lg text-stroke uppercase">INTENSITY</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Cards -->
+        <section class="max-w-7xl mx-auto px-8 mb-32">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pricing-grid">
+                <!-- Monthly Plan -->
+                <div class="bg-[#1A1A1A] border-l-4 border-zinc-800 p-8 flex flex-col transition-all duration-300 hover:border-white pricing-card gsap-reveal">
+                    <span class="font-label-sm text-label-sm text-zinc-500 uppercase tracking-widest mb-2">Basic Access</span>
+                    <h3 class="font-headline-md text-headline-md uppercase mb-4 text-white">MONTHLY</h3>
+                    <div class="flex items-baseline gap-1 mb-8"><span class="text-primary-container font-headline-lg text-headline-lg">₹</span><span class="font-headline-xl text-headline-xl text-white">2,000</span><span class="text-zinc-500 font-bold">/MO</span></div>
+                    <ul class="space-y-4 mb-12 flex-grow">
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary-container">check_circle</span>
+                            <span class="font-label-sm text-label-sm uppercase text-white">24/7 Gym Access</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary-container">check_circle</span>
+                            <span class="font-label-sm text-label-sm uppercase text-white">Locker & Showers</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary-container">check_circle</span>
+                            <span class="font-label-sm text-label-sm uppercase text-white">Mobile App Access</span>
+                        </li>
+                    </ul>
+                    <a href="booking.html" class="w-full text-center border-2 border-white text-white font-headline-md text-headline-md uppercase py-4 hover:bg-white hover:text-black transition-colors active:scale-95 block">
+                        SELECT
+                    </a>
+                </div>
+                
+                <!-- Quarterly Plan (Most Popular) -->
+                <div class="bg-primary-container p-8 flex flex-col relative scale-105 z-10 shadow-[0_0_50px_rgba(255,140,0,0.2)] pricing-card gsap-reveal">
+                    <div class="absolute top-0 right-0 bg-black text-white px-4 py-1 text-xs font-black uppercase tracking-widest">
+                        MOST POPULAR
+                    </div>
+                    <span class="font-label-sm text-label-sm text-black uppercase tracking-widest mb-2">Performance Pack</span>
+                    <h3 class="font-headline-md text-headline-md uppercase mb-4 text-black">6 MONTHS</h3>
+                    <div class="flex items-baseline gap-1 mb-8"><span class="text-black font-headline-lg text-headline-lg">₹</span><span class="font-headline-xl text-headline-xl text-black">6,000</span><span class="text-black font-bold">/6MO</span></div>
+                    <ul class="space-y-4 mb-12 flex-grow">
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-black" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            <span class="font-label-sm text-label-sm uppercase text-black">All Monthly Benefits</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-black" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            <span class="font-label-sm text-label-sm uppercase text-black">5 Private Trainer Sessions</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-black" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            <span class="font-label-sm text-label-sm uppercase text-black">Nutrition Consultation</span>
+                        </li>
+                    </ul>
+                    <a href="booking.html" class="w-full text-center bg-black text-primary-container font-headline-md text-headline-md uppercase py-4 hover:bg-zinc-900 transition-colors active:scale-95 inline-block">
+                        JOIN NOW
+                    </a>
+                </div>
+                
+                <!-- Yearly Plan -->
+                <div class="bg-[#1A1A1A] border-r-4 border-zinc-800 p-8 flex flex-col transition-all duration-300 hover:border-white pricing-card gsap-reveal">
+                    <span class="font-label-sm text-label-sm text-zinc-500 uppercase tracking-widest mb-2">Elite Status</span>
+                    <h3 class="font-headline-md text-headline-md uppercase mb-4 text-white">YEARLY</h3>
+                    <div class="flex items-baseline gap-1 mb-8"><span class="text-primary-container font-headline-lg text-headline-lg">₹</span><span class="font-headline-xl text-headline-xl text-white">9,000</span><span class="text-zinc-500 font-bold">/YR</span></div>
+                    <ul class="space-y-4 mb-12 flex-grow">
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary-container">check_circle</span>
+                            <span class="font-label-sm text-label-sm uppercase text-white">Unrestricted Access</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary-container">check_circle</span>
+                            <span class="font-label-sm text-label-sm uppercase text-white">Priority Booking</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary-container">check_circle</span>
+                            <span class="font-label-sm text-label-sm uppercase text-white">Guest Passes Monthly</span>
+                        </li>
+                    </ul>
+                    <a href="booking.html" class="w-full text-center border-2 border-white text-white font-headline-md text-headline-md uppercase py-4 hover:bg-white hover:text-black transition-colors active:scale-95 block">
+                        SELECT
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Comparison Table -->
+        <section class="max-w-7xl mx-auto px-8 mb-32 overflow-hidden comparison-section">
+            <h2 class="font-headline-lg text-headline-lg uppercase mb-12 text-center text-white gsap-reveal">FEATURE <span class="text-primary-container">BREAKDOWN</span></h2>
+            <div class="bg-[#1A1A1A] border-t-2 border-zinc-800 table-container gsap-reveal">
+                <table class="w-full text-left border-collapse text-white">
+                    <thead>
+                        <tr class="border-b-2 border-zinc-900 bg-black">
+                            <th class="p-6 font-headline-md text-headline-md uppercase">FEATURES</th>
+                            <th class="p-6 font-label-sm text-label-sm uppercase text-zinc-500 text-center">MONTHLY</th>
+                            <th class="p-6 font-label-sm text-label-sm uppercase text-primary-container text-center">6 MONTHS</th>
+                            <th class="p-6 font-label-sm text-label-sm uppercase text-zinc-500 text-center">YEARLY</th>
+                        </tr>
+                    </thead>
+                    <tbody class="font-label-sm text-label-sm">
+                        <tr class="zebra-row border-b border-zinc-900">
+                            <td class="p-6 uppercase">24/7 FACILITY ACCESS</td>
+                            <td class="p-6 text-center text-primary-container"><span class="material-symbols-outlined">check</span></td>
+                            <td class="p-6 text-center text-primary-container"><span class="material-symbols-outlined">check</span></td>
+                            <td class="p-6 text-center text-primary-container"><span class="material-symbols-outlined">check</span></td>
+                        </tr>
+                        <tr class="zebra-row border-b border-zinc-900">
+                            <td class="p-6 uppercase">PERSONAL TRAINER SESSIONS</td>
+                            <td class="p-6 text-center text-zinc-700">NONE</td>
+                            <td class="p-6 text-center text-primary-container font-bold italic">5 SESSIONS</td>
+                            <td class="p-6 text-center text-primary-container font-bold italic">12 SESSIONS</td>
+                        </tr>
+                        <tr class="zebra-row border-b border-zinc-900">
+                            <td class="p-6 uppercase">GROUP FITNESS CLASSES</td>
+                            <td class="p-6 text-center text-zinc-700"><span class="material-symbols-outlined">close</span></td>
+                            <td class="p-6 text-center text-primary-container"><span class="material-symbols-outlined">check</span></td>
+                            <td class="p-6 text-center text-primary-container"><span class="material-symbols-outlined">check</span></td>
+                        </tr>
+                        <tr class="zebra-row border-b border-zinc-900">
+                            <td class="p-6 uppercase">NUTRITION GUIDANCE</td>
+                            <td class="p-6 text-center text-zinc-700"><span class="material-symbols-outlined">close</span></td>
+                            <td class="p-6 text-center text-primary-container"><span class="material-symbols-outlined">check</span></td>
+                            <td class="p-6 text-center text-primary-container"><span class="material-symbols-outlined">check</span></td>
+                        </tr>
+                        <tr class="zebra-row border-b border-zinc-900">
+                            <td class="p-6 uppercase">PREMIUM GUEST PASSES</td>
+                            <td class="p-6 text-center text-zinc-700">NONE</td>
+                            <td class="p-6 text-center text-zinc-700">NONE</td>
+                            <td class="p-6 text-center text-primary-container font-bold italic">2/MONTH</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Dynamic Content Section -->
+        <section class="max-w-7xl mx-auto px-8 grid grid-cols-12 gap-gutter items-stretch dynamic-section">
+            <div class="col-span-12 lg:col-span-7 bg-zinc-900 overflow-hidden min-h-[400px] relative border-4 border-zinc-800 gsap-reveal group">
+                <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=2070&auto=format&fit=crop">
+                <div class="absolute inset-0 flex flex-col justify-end p-12 bg-gradient-to-t from-black via-black/50 to-transparent">
+                    <h3 class="font-headline-xl text-headline-xl uppercase text-stroke mb-4">TRAIN WITH THE BEST</h3>
+                    <p class="font-body-lg text-body-lg text-white max-w-sm">Elite equipment and expert trainers to push your limits to the breaking point.</p>
+                </div>
+            </div>
+            <div class="col-span-12 lg:col-span-5 flex flex-col justify-center bg-primary-container p-12 gsap-reveal">
+                <span class="font-label-sm text-label-sm text-black uppercase font-black tracking-widest mb-4">READY TO COMMIT?</span>
+                <h2 class="font-headline-lg text-headline-lg text-black uppercase mb-8">NO MORE EXCUSES. START TODAY.</h2>
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4 hover:translate-x-2 transition-transform cursor-default">
+                        <div class="bg-black text-primary-container w-12 h-12 flex items-center justify-center font-headline-md shrink-0">1</div>
+                        <div>
+                            <p class="font-headline-md text-headline-md text-black uppercase leading-none">SIGN UP</p>
+                            <p class="text-on-primary-container text-sm font-bold uppercase mt-1">FAST ONLINE ENROLLMENT</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 hover:translate-x-2 transition-transform cursor-default">
+                        <div class="bg-black text-primary-container w-12 h-12 flex items-center justify-center font-headline-md shrink-0">2</div>
+                        <div>
+                            <p class="font-headline-md text-headline-md text-black uppercase leading-none">ASSESS</p>
+                            <p class="text-on-primary-container text-sm font-bold uppercase mt-1">EXPERT FITNESS EVALUATION</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 hover:translate-x-2 transition-transform cursor-default">
+                        <div class="bg-black text-primary-container w-12 h-12 flex items-center justify-center font-headline-md shrink-0">3</div>
+                        <div>
+                            <p class="font-headline-md text-headline-md text-black uppercase leading-none">DOMINATE</p>
+                            <p class="text-on-primary-container text-sm font-bold uppercase mt-1">HIT YOUR GOALS HARD</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#0A0A0A] border-t-4 border-orange-500 mt-24">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 px-12 py-16 w-full max-w-7xl mx-auto">
+            <div class="flex flex-col gap-6 footer-item gsap-reveal">
+                <div class="text-xl font-black text-orange-500 uppercase font-['Epilogue'] tracking-widest">BODY FUEL</div>
+                <p class="text-zinc-500 font-['Lexend'] text-xs font-bold leading-relaxed">
+                    FORGING ELITE ATHLETES THROUGH DISCIPLINE AND INTENSITY. NO SHORTCUTS. ONLY RESULTS.
+                </p>
+            </div>
+            <div class="footer-item gsap-reveal">
+                <h4 class="text-white font-['Epilogue'] uppercase text-xs font-bold tracking-widest mb-6">NAVIGATION</h4>
+                <ul class="flex flex-col gap-3">
+                    <li><a class="text-zinc-500 hover:text-orange-500 transition-colors uppercase text-xs font-bold tracking-widest" href="index.html">Home</a></li>
+                    <li><a class="text-zinc-500 hover:text-orange-500 transition-colors uppercase text-xs font-bold tracking-widest" href="services.html">Services</a></li>
+                    <li><a class="text-zinc-500 hover:text-orange-500 transition-colors uppercase text-xs font-bold tracking-widest" href="#">Privacy</a></li>
+                    <li><a class="text-zinc-500 hover:text-orange-500 transition-colors uppercase text-xs font-bold tracking-widest" href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-item gsap-reveal">
+                <h4 class="text-white font-['Epilogue'] uppercase text-xs font-bold tracking-widest mb-6">CONTACT</h4>
+                <p class="text-zinc-500 uppercase text-xs font-bold tracking-widest mb-2">IRON STREET, DISTRICT 01</p>
+                <p class="text-zinc-500 uppercase text-xs font-bold tracking-widest">INFO@BODYFUEL.CLUB</p>
+            </div>
+            <div class="flex flex-col gap-4 footer-item gsap-reveal">
+                <h4 class="text-white font-['Epilogue'] uppercase text-xs font-bold tracking-widest">FOLLOW US</h4>
+                <div class="flex gap-4">
+                    <div class="w-10 h-10 bg-zinc-900 flex items-center justify-center text-orange-500 hover:bg-orange-500 hover:text-black cursor-pointer transition-colors hover:scale-110">
+                        <span class="material-symbols-outlined">share</span>
+                    </div>
+                    <div class="w-10 h-10 bg-zinc-900 flex items-center justify-center text-orange-500 hover:bg-orange-500 hover:text-black cursor-pointer transition-colors hover:scale-110">
+                        <span class="material-symbols-outlined">person</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-full max-w-7xl mx-auto px-12 py-6 border-t border-zinc-900">
+            <p class="text-zinc-500 font-['Epilogue'] uppercase text-xs font-bold tracking-widest text-center">
+                © 2024 BODY FUEL FITNESS CLUB. NO EXCUSES.
+            </p>
+        </div>
+    </footer>
+
+    <!-- GSAP Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        window.addEventListener('load', () => {
+            initAnimations();
+        });
+
+        function initAnimations() {
+            gsap.set('.gsap-reveal', { autoAlpha: 1 });
+            
+            // Hero Animation
+            const tl = gsap.timeline();
+            tl.fromTo('.hero-img', { scale: 1.2 }, { scale: 1, duration: 2, ease: 'power2.out' })
+              .from('.hero-text-container .gsap-reveal', {
+                  y: 50, opacity: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out'
+              }, "-=1.5");
+
+            // Pricing Cards Stagger
+            gsap.from('.pricing-card', {
+                scrollTrigger: { trigger: '.pricing-grid', start: 'top 85%' },
+                y: 50, opacity: 0, duration: 0.8, stagger: 0.2, ease: 'power2.out'
+            });
+
+            // Comparison Table
+            gsap.from('.comparison-section .gsap-reveal', {
+                scrollTrigger: { trigger: '.comparison-section', start: 'top 85%' },
+                y: 40, opacity: 0, duration: 0.8, stagger: 0.2
+            });
+
+            // Dynamic Section
+            gsap.from('.dynamic-section .gsap-reveal', {
+                scrollTrigger: { trigger: '.dynamic-section', start: 'top 85%' },
+                y: 40, opacity: 0, duration: 0.8, stagger: 0.3
+            });
+
+            // Footer
+            gsap.from('.footer-item', {
+                scrollTrigger: { trigger: 'footer', start: 'top 95%' },
+                y: 30, opacity: 0, duration: 0.8, stagger: 0.1
+            });
+        }
+
+        // Navbar Scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-black/95', 'backdrop-blur-md');
+                nav.classList.remove('bg-black');
+            } else {
+                nav.classList.add('bg-black');
+                nav.classList.remove('bg-black/95', 'backdrop-blur-md');
+            }
+        });
+        // Login Modal Logic
+        function openLoginModal() {
+            const modal = document.getElementById('login-modal');
+            const content = document.getElementById('login-modal-content');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-90');
+            content.classList.add('scale-100');
+        }
+        function closeLoginModal() {
+            const modal = document.getElementById('login-modal');
+            const content = document.getElementById('login-modal-content');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-90');
+        }
+    </script>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-[#111] border-2 border-zinc-900 p-12 max-w-md w-full relative transform scale-90 transition-transform duration-300" id="login-modal-content">
+            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <div class="text-center mb-8">
+                <div class="text-2xl font-black text-orange-500 italic tracking-widest font-['Epilogue'] uppercase mb-2">BODY FUEL</div>
+                <p class="text-zinc-500 font-bold uppercase text-xs tracking-widest">Member Portal Access</p>
+            </div>
+            <form class="space-y-6">
+                <div>
+                    <label class="block text-xs uppercase font-bold text-zinc-500 mb-2">Email Address</label>
+                    <input type="email" required class="w-full bg-[#1A1A1A] border-zinc-800 text-white focus:border-primary-container focus:ring-0 p-3">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-bold text-zinc-500 mb-2">Password</label>
+                    <input type="password" required class="w-full bg-[#1A1A1A] border-zinc-800 text-white focus:border-primary-container focus:ring-0 p-3">
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                    <label class="flex items-center text-zinc-500 cursor-pointer">
+                        <input type="checkbox" class="bg-[#1A1A1A] border-zinc-800 text-primary-container focus:ring-0 mr-2"> Remember Me
+                    </label>
+                    <a href="#" class="text-primary-container hover:text-white transition-colors">Forgot Password?</a>
+                </div>
+                <button type="button" onclick="closeLoginModal()" class="w-full bg-primary-container text-black font-headline-md text-xl uppercase py-4 hover:bg-white transition-colors active:scale-95">
+                    ENTER SECURE ZONE
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

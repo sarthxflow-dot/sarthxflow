@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>BODY FUEL | Book Trial</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800;900&family=Lexend:wght@400;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+                "primary-container": "#ff8c00",
+                "surface": "#131313",
+                "on-surface-variant": "#ddc1ae",
+                "background": "#131313",
+                "on-background": "#e5e2e1"
+            },
+            spacing: {
+                "margin": "40px",
+                "gutter": "24px",
+                "container-max": "1280px"
+            },
+            fontFamily: {
+                "headline-xl": ["Epilogue"],
+                "headline-md": ["Epilogue"],
+                "headline-lg": ["Epilogue"],
+                "body-lg": ["Lexend"],
+                "label-sm": ["Lexend"],
+                "body-md": ["Lexend"]
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .text-stroke {
+            -webkit-text-stroke: 1px rgba(255, 140, 0, 0.5);
+            color: transparent;
+        }
+        /* Custom calendar/booking styles */
+        .slot-btn {
+            border: 2px solid #333;
+            transition: all 0.3s ease;
+        }
+        .slot-btn:hover:not(:disabled) {
+            border-color: #ff8c00;
+            color: #ff8c00;
+        }
+        .slot-btn.selected {
+            background-color: #ff8c00;
+            color: #000;
+            border-color: #ff8c00;
+        }
+        .slot-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            border-color: #222;
+        }
+        .date-btn {
+            transition: all 0.3s ease;
+        }
+        .date-btn:hover {
+            border-color: #ff8c00;
+        }
+        .date-btn.selected {
+            background-color: #ff8c00;
+            color: #000;
+            border-color: #ff8c00;
+        }
+        /* GSAP Initial state */
+        .gsap-reveal { opacity: 0; visibility: hidden; }
+        
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-container selection:text-black overflow-x-hidden">
+
+    <!-- TopNavBar -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 bg-black border-b-2 border-zinc-900 transition-all duration-300">
+        <div class="flex justify-between items-center w-full px-8 py-4 max-w-7xl mx-auto">
+            <div class="text-2xl font-black text-orange-500 italic tracking-widest font-['Epilogue'] uppercase">
+                BODY FUEL
+            </div>
+            <div class="hidden md:flex gap-8 items-center">
+                <a class="font-['Epilogue'] font-black uppercase tracking-tighter text-white hover:text-orange-500 transition-colors duration-150" href="index.html">Home</a>
+                <a class="font-['Epilogue'] font-black uppercase tracking-tighter text-white hover:text-orange-500 transition-colors duration-150" href="services.html">Services</a>
+                <a class="font-['Epilogue'] font-black uppercase tracking-tighter text-white hover:text-orange-500 transition-colors duration-150" href="membership.html">Pricing</a>
+                <a class="font-['Epilogue'] font-black uppercase tracking-tighter text-white hover:text-orange-500 transition-colors duration-150" href="index.html#gallery">Gallery</a>
+                <a class="font-['Epilogue'] font-black uppercase tracking-tighter text-orange-500 border-b-2 border-orange-500 pb-1" href="booking.html">Booking</a>
+            </div>
+            <button onclick="openLoginModal()" class="bg-primary-container text-black font-['Epilogue'] font-black uppercase px-6 py-2 tracking-tighter hover:bg-white hover:text-black transition-all">
+                LOGIN
+            </button>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24">
+        <!-- Header -->
+        <section class="max-w-7xl mx-auto px-8 mb-16 text-center">
+            <h1 class="font-headline-xl text-headline-xl uppercase mb-4 gsap-reveal">
+                SECURE YOUR <span class="text-primary-container">SPOT</span>
+            </h1>
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto gsap-reveal">
+                Ready to experience the intensity? Book your free trial session. Select a date, choose a time slot, and bring your absolute best.
+            </p>
+        </section>
+
+        <!-- Booking Form Grid -->
+        <section class="max-w-5xl mx-auto px-8">
+            <div class="bg-[#111] border-2 border-zinc-900 grid grid-cols-1 md:grid-cols-12 overflow-hidden gsap-reveal book-container">
+                
+                <!-- Left Panel (Calendar/Dates) -->
+                <div class="md:col-span-5 p-8 border-b-2 md:border-b-0 md:border-r-2 border-zinc-900 bg-[#0A0A0A]">
+                    <div class="flex items-center gap-3 mb-8">
+                        <span class="material-symbols-outlined text-primary-container text-3xl">calendar_month</span>
+                        <h2 class="font-headline-md text-2xl uppercase">Select Date</h2>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4" id="date-container">
+                        <!-- Dates generated by JS -->
+                    </div>
+                </div>
+                
+                <!-- Right Panel (Time Slots & Details) -->
+                <div class="md:col-span-7 p-8 flex flex-col">
+                    <div class="flex items-center gap-3 mb-8">
+                        <span class="material-symbols-outlined text-primary-container text-3xl">schedule</span>
+                        <h2 class="font-headline-md text-2xl uppercase">Available Slots</h2>
+                    </div>
+
+                    <div id="slots-container" class="grid grid-cols-3 gap-4 mb-12">
+                        <!-- Slots will be injected here via JS -->
+                        <div class="col-span-3 text-center text-zinc-500 italic py-8">Please select a date first</div>
+                    </div>
+
+                    <div class="mt-auto pt-8 border-t border-zinc-900">
+                        <form id="booking-form" class="space-y-6 hidden">
+                            <h3 class="font-headline-md text-xl uppercase mb-4 text-white">Your Details</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs uppercase font-bold text-zinc-500 mb-2">First Name</label>
+                                    <input type="text" required class="w-full bg-[#1A1A1A] border-zinc-800 text-white focus:border-primary-container focus:ring-0 p-3">
+                                </div>
+                                <div>
+                                    <label class="block text-xs uppercase font-bold text-zinc-500 mb-2">Last Name</label>
+                                    <input type="text" required class="w-full bg-[#1A1A1A] border-zinc-800 text-white focus:border-primary-container focus:ring-0 p-3">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs uppercase font-bold text-zinc-500 mb-2">Email Address</label>
+                                    <input type="email" required class="w-full bg-[#1A1A1A] border-zinc-800 text-white focus:border-primary-container focus:ring-0 p-3">
+                                </div>
+                                <div>
+                                    <label class="block text-xs uppercase font-bold text-zinc-500 mb-2">Phone Number</label>
+                                    <input type="tel" required class="w-full bg-[#1A1A1A] border-zinc-800 text-white focus:border-primary-container focus:ring-0 p-3">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase font-bold text-zinc-500 mb-2">Goal / Focus Area</label>
+                                <select class="w-full bg-[#1A1A1A] border-zinc-800 text-white focus:border-primary-container focus:ring-0 p-3">
+                                    <option>Strength & Conditioning</option>
+                                    <option>Weight Loss / Fat Burn</option>
+                                    <option>Hypertrophy / Muscle Gain</option>
+                                    <option>General Fitness & Cardio</option>
+                                </select>
+                            </div>
+                            <button type="button" id="submit-booking" class="w-full bg-primary-container text-black font-headline-md text-xl uppercase py-4 mt-6 hover:bg-white transition-colors active:scale-95">
+                                CONFIRM BOOKING
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Confirmation Modal -->
+        <div id="success-modal" class="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500">
+            <div class="bg-[#111] border-2 border-primary-container p-12 max-w-lg text-center transform scale-90 transition-transform duration-500 modal-content">
+                <span class="material-symbols-outlined text-primary-container text-7xl mb-6">task_alt</span>
+                <h2 class="font-headline-lg text-4xl uppercase text-white mb-4">YOU'RE LOCKED IN</h2>
+                <p class="text-zinc-400 mb-8">Your trial session is confirmed. Check your email for facility guidelines and what to bring.</p>
+                <button onclick="closeModal()" class="border-2 border-white text-white font-bold uppercase tracking-widest px-8 py-3 hover:bg-white hover:text-black transition-colors">BACK TO HOME</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#0A0A0A] border-t-4 border-orange-500 mt-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 px-12 py-16 w-full max-w-7xl mx-auto">
+            <div class="flex flex-col gap-6 footer-item gsap-reveal">
+                <div class="text-xl font-black text-orange-500 uppercase font-['Epilogue'] tracking-widest">BODY FUEL</div>
+                <p class="text-zinc-500 font-['Lexend'] text-xs font-bold leading-relaxed">
+                    FORGING ELITE ATHLETES THROUGH DISCIPLINE AND INTENSITY. NO SHORTCUTS. ONLY RESULTS.
+                </p>
+            </div>
+            <div class="footer-item gsap-reveal">
+                <h4 class="text-white font-['Epilogue'] uppercase text-xs font-bold tracking-widest mb-6">NAVIGATION</h4>
+                <ul class="flex flex-col gap-3">
+                    <li><a class="text-zinc-500 hover:text-orange-500 transition-colors uppercase text-xs font-bold tracking-widest" href="index.html">Home</a></li>
+                    <li><a class="text-zinc-500 hover:text-orange-500 transition-colors uppercase text-xs font-bold tracking-widest" href="services.html">Services</a></li>
+                    <li><a class="text-zinc-500 hover:text-orange-500 transition-colors uppercase text-xs font-bold tracking-widest" href="membership.html">Pricing</a></li>
+                    <li><a class="text-zinc-500 hover:text-orange-500 transition-colors uppercase text-xs font-bold tracking-widest" href="#">Privacy</a></li>
+                </ul>
+            </div>
+            <div class="footer-item gsap-reveal">
+                <h4 class="text-white font-['Epilogue'] uppercase text-xs font-bold tracking-widest mb-6">CONTACT</h4>
+                <p class="text-zinc-500 uppercase text-xs font-bold tracking-widest mb-2">IRON STREET, DISTRICT 01</p>
+                <p class="text-zinc-500 uppercase text-xs font-bold tracking-widest">INFO@BODYFUEL.CLUB</p>
+            </div>
+            <div class="flex flex-col gap-4 footer-item gsap-reveal">
+                <h4 class="text-white font-['Epilogue'] uppercase text-xs font-bold tracking-widest">FOLLOW US</h4>
+                <div class="flex gap-4">
+                    <div class="w-10 h-10 bg-zinc-900 flex items-center justify-center text-orange-500 hover:bg-orange-500 hover:text-black cursor-pointer transition-colors hover:scale-110">
+                        <span class="material-symbols-outlined">share</span>
+                    </div>
+                    <div class="w-10 h-10 bg-zinc-900 flex items-center justify-center text-orange-500 hover:bg-orange-500 hover:text-black cursor-pointer transition-colors hover:scale-110">
+                        <span class="material-symbols-outlined">person</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-full max-w-7xl mx-auto px-12 py-6 border-t border-zinc-900">
+            <p class="text-zinc-500 font-['Epilogue'] uppercase text-xs font-bold tracking-widest text-center">
+                © 2024 BODY FUEL FITNESS CLUB. NO EXCUSES.
+            </p>
+        </div>
+    </footer>
+
+    <!-- GSAP Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        window.addEventListener('load', () => {
+            initAnimations();
+            generateDates();
+        });
+
+        function initAnimations() {
+            gsap.set('.gsap-reveal', { autoAlpha: 1 });
+            
+            gsap.from('.gsap-reveal:not(.book-container, .footer-item)', {
+                y: 30, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out'
+            });
+
+            gsap.from('.book-container', {
+                y: 50, opacity: 0, duration: 1, delay: 0.3, ease: 'power2.out'
+            });
+
+            gsap.from('.footer-item', {
+                scrollTrigger: { trigger: 'footer', start: 'top 95%' },
+                y: 30, opacity: 0, duration: 0.8, stagger: 0.1
+            });
+        }
+
+        // Logic for booking dates and slots
+        const timeSlots = ["06:00 AM", "07:30 AM", "09:00 AM", "12:00 PM", "04:30 PM", "06:00 PM", "07:30 PM", "09:00 PM"];
+        let selectedDate = null;
+        let selectedSlot = null;
+
+        function generateDates() {
+            const container = document.getElementById('date-container');
+            const today = new Date();
+            
+            for(let i=0; i<6; i++) {
+                const date = new Date(today);
+                date.setDate(today.getDate() + i);
+                
+                const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+                const dayNum = date.getDate();
+                const month = date.toLocaleDateString('en-US', { month: 'short' });
+                const isToday = i === 0;
+
+                const btn = document.createElement('button');
+                btn.className = `date-btn w-full border-2 border-zinc-800 p-4 text-center rounded flex flex-col items-center bg-[#151515]`;
+                btn.innerHTML = `
+                    <span class="text-zinc-500 font-bold uppercase text-xs mb-1">${isToday ? 'TODAY' : dayName}</span>
+                    <span class="text-3xl font-black font-['Epilogue'] text-white">${dayNum}</span>
+                    <span class="text-zinc-500 font-bold uppercase text-xs mt-1">${month}</span>
+                `;
+                
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.date-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedDate = date;
+                    renderSlots();
+                });
+
+                container.appendChild(btn);
+            }
+        }
+
+        function renderSlots() {
+            const container = document.getElementById('slots-container');
+            container.innerHTML = '';
+            
+            // Randomly disable some slots for realism
+            timeSlots.forEach((time, index) => {
+                const btn = document.createElement('button');
+                const isFull = Math.random() < 0.3 && index !== 0; // Don't block first slot completely
+                
+                btn.className = `slot-btn w-full py-3 text-sm font-bold uppercase tracking-widest text-white bg-[#151515] rounded`;
+                btn.textContent = isFull ? 'FULL' : time;
+                if(isFull) btn.disabled = true;
+
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedSlot = time;
+                    document.getElementById('booking-form').classList.remove('hidden');
+                    // Animate form reveal
+                    gsap.from('#booking-form', { opacity: 0, y: 20, duration: 0.4 });
+                });
+
+                container.appendChild(btn);
+            });
+        }
+
+        // Form Submit
+        document.getElementById('submit-booking').addEventListener('click', () => {
+            const form = document.getElementById('booking-form');
+            if(form.checkValidity()) {
+                // Show modal
+                const modal = document.getElementById('success-modal');
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modal.querySelector('.modal-content').classList.remove('scale-90');
+                modal.querySelector('.modal-content').classList.add('scale-100');
+            } else {
+                form.reportValidity();
+            }
+        });
+
+        function closeModal() {
+            window.location.href = 'index.html';
+        }
+
+        // Navbar Scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-black/95', 'backdrop-blur-md');
+                nav.classList.remove('bg-black');
+            } else {
+                nav.classList.add('bg-black');
+                nav.classList.remove('bg-black/95', 'backdrop-blur-md');
+            }
+        });
+        // Login Modal Logic
+        function openLoginModal() {
+            const modal = document.getElementById('login-modal');
+            const content = document.getElementById('login-modal-content');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-90');
+            content.classList.add('scale-100');
+        }
+        function closeLoginModal() {
+            const modal = document.getElementById('login-modal');
+            const content = document.getElementById('login-modal-content');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-90');
+        }
+    </script>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-[#111] border-2 border-zinc-900 p-12 max-w-md w-full relative transform scale-90 transition-transform duration-300" id="login-modal-content">
+            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <div class="text-center mb-8">
+                <div class="text-2xl font-black text-orange-500 italic tracking-widest font-['Epilogue'] uppercase mb-2">BODY FUEL</div>
+                <p class="text-zinc-500 font-bold uppercase text-xs tracking-widest">Member Portal Access</p>
+            </div>
+            <form class="space-y-6">
+                <div>
+                    <label class="block text-xs uppercase font-bold text-zinc-500 mb-2">Email Address</label>
+                    <input type="email" required class="w-full bg-[#1A1A1A] border-zinc-800 text-white focus:border-primary-container focus:ring-0 p-3">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-bold text-zinc-500 mb-2">Password</label>
+                    <input type="password" required class="w-full bg-[#1A1A1A] border-zinc-800 text-white focus:border-primary-container focus:ring-0 p-3">
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                    <label class="flex items-center text-zinc-500 cursor-pointer">
+                        <input type="checkbox" class="bg-[#1A1A1A] border-zinc-800 text-primary-container focus:ring-0 mr-2"> Remember Me
+                    </label>
+                    <a href="#" class="text-primary-container hover:text-white transition-colors">Forgot Password?</a>
+                </div>
+                <button type="button" onclick="closeLoginModal()" class="w-full bg-primary-container text-black font-headline-md text-xl uppercase py-4 hover:bg-white transition-colors active:scale-95">
+                    ENTER SECURE ZONE
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
